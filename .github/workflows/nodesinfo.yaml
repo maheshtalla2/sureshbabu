@@ -13,9 +13,6 @@ jobs:
 
       - name: Get Cluster Info (Print to Logs)
         run: |
-          echo "=== Cluster Info ==="
-          kubectl cluster-info
-
           echo "=== Node Info ==="
           kubectl get nodes -o wide
 
