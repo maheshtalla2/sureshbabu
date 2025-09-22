@@ -11,16 +11,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-    
-          
+      - name: Get Cluster Info (Print to Logs)
+        run: |
+          echo "=== Cluster Info ==="
+          kubectl cluster-info
+
           echo "=== Node Info ==="
           kubectl get nodes -o wide
-          
+
           echo "=== Namespaces ==="
           kubectl get ns
-          
+
           echo "=== Pods (All namespaces) ==="
           kubectl get pods -A -o wide
+        shell: bash
 
       - name: Save Info as Artifact
         run: |
