@@ -1,4 +1,4 @@
-name: Get Deployments and Services Info 33
+name: Get Deployments and Services Info 22
 
 on:
   workflow_dispatch:   # Run manually from GitHub Actions
@@ -7,8 +7,8 @@ jobs:
   get-k8s-info:
     runs-on: self-hosted
     env:
-      # 👇 Make sure this path points to your kubeconfig on the runner
-      KUBECONFIG: C:\Users\runner\.kube\config
+      # 👇 Update with correct kubeconfig path on your runner
+      KUBECONFIG: C:\Users\runneradmin\.kube\config
 
     steps:
       - name: Checkout code
