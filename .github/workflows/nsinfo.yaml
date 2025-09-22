@@ -1,0 +1,20 @@
+name: Get Namespaces Info
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  get-namespaces-info:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get Namespaces Info (Print to Logs)
+        shell: bash   # use bash (better for kubectl commands)
+        run: |
+          echo "Fetching all Kubernetes Namespaces..."
+          kubectl get namespaces
