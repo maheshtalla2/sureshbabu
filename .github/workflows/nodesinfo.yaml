@@ -5,7 +5,7 @@ on:
 
 jobs:
   get-cluster-info:
-    runs-on: self-hosted   # 👈 your runner (already has kubectl configured)
+    runs-on: self-hosted   # 👈 your runner (must have kubectl configured in PATH)
 
     steps:
       - name: Checkout code
@@ -13,15 +13,17 @@ jobs:
 
       - name: Get Cluster Info (Print to Logs)
         run: |
-          echo "=== Node Info ==="
+          echo === Cluster Info ===
+          kubectl cluster-info
+
+          echo === Node Info ===
           kubectl get nodes -o wide
 
-          echo "=== Namespaces ==="
+          echo === Namespaces ===
           kubectl get ns
 
-          echo "=== Pods (All namespaces) ==="
+          echo === Pods (All namespaces) ===
           kubectl get pods -A -o wide
-        shell: bash
 
       - name: Save Info as Artifact
         run: |
@@ -29,7 +31,6 @@ jobs:
           kubectl get nodes -o wide > nodes-info.txt
           kubectl get ns > namespaces.txt
           kubectl get pods -A -o wide > pods-info.txt
-        shell: bash
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
