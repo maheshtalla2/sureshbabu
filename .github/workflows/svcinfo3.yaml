@@ -1,0 +1,29 @@
+name: Get Services Info 33
+
+on:
+  workflow_dispatch:   # Run manually from GitHub Actions tab
+
+jobs:
+  get-services-info:
+    runs-on: self-hosted   # 👈 your runner must have kubectl configured
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get Services Info (Print to Logs)
+        run: |
+          echo === Services (All namespaces) ===
+          kubectl get svc -A -o wide
+        shell: cmd
+
+      - name: Save Services Info as Artifact
+        run: |
+          kubectl get svc -A -o wide > services-info.txt
+        shell: cmd
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: k8s-services
+          path: services-info.txt
