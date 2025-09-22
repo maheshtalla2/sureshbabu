@@ -1,0 +1,19 @@
+name: Get Pods Info
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  get-pods-info:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get Pods Info (Print to Logs)
+        run: |
+          echo "Fetching all Pods info..."
+          kubectl get pods -o wide
