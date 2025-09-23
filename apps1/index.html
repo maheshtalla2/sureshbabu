@@ -1,64 +1,71 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MyApp — Demo</title>
-  <style>
-    body { font-family: Arial, Helvetica, sans-serif; margin: 40px; color: #222; background:#f7f9fc; }
-    .card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); max-width:800px; margin:auto; }
-    h1 { margin: 0 0 8px 0; font-size: 28px; }
-    p { margin: 6px 0 12px 0; color: #444; }
-    .meta { font-size: 13px; color:#666; }
-    .status { display:inline-block; padding:6px 10px; border-radius:999px; background:#e6f4ea; color:#167a2f; font-weight:600; }
-    .row { display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
-    .box { background:#fafbff; padding:12px; border-radius:6px; border:1px solid #eef2ff; }
-    footer { text-align:center; margin-top:24px; color:#888; font-size:13px; }
-  </style>
+    <title>College Student Data</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, button { margin: 5px 0; padding: 5px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <h1>MyApp — Demo Frontend</h1>
-    <p>This is a minimal static page served by the Node app that the GitHub Actions workflow will build into a Docker image and deploy to Kubernetes.</p>
 
-    <div class="row">
-      <div class="box">
-        <div class="meta">App status</div>
-        <div id="status" class="status">Loading…</div>
-      </div>
+    <h2>College Student Data Form</h2>
+    <form id="studentForm">
+        <label>Name:</label><br>
+        <input type="text" id="name" required><br>
+        
+        <label>Class:</label><br>
+        <input type="text" id="class" required><br>
+        
+        <label>City:</label><br>
+        <input type="text" id="city" required><br>
+        
+        <label>Phone:</label><br>
+        <input type="text" id="phone" required><br>
+        
+        <button type="submit">Save Student</button>
+    </form>
 
-      <div class="box">
-        <div class="meta">Version</div>
-        <div id="version">—</div>
-      </div>
+    <h2>Saved Students</h2>
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Class</th>
+                <th>City</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
-      <div class="box">
-        <div class="meta">Commit</div>
-        <div id="commit">—</div>
-      </div>
-    </div>
+    <script>
+        const studentForm = document.getElementById('studentForm');
+        const studentTable = document.getElementById('studentTable').getElementsByTagName('tbody')[0];
 
-    <p style="margin-top:16px">This page requests the server for status info on load. If you open <code>/health</code> it will return JSON.</p>
+        studentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-    <footer>Built for demo — served from inside the container</footer>
-  </div>
+            const name = document.getElementById('name').value;
+            const cls = document.getElementById('class').value;
+            const city = document.getElementById('city').value;
+            const phone = document.getElementById('phone').value;
 
-  <script>
-    async function loadInfo(){
-      try {
-        const res = await fetch('/health');
-        if (!res.ok) throw new Error('no response');
-        const info = await res.json();
-        document.getElementById('status').textContent = (info.ok ? 'Healthy' : 'Unhealthy');
-        document.getElementById('version').textContent = info.version || 'N/A';
-        document.getElementById('commit').textContent = info.commit || 'N/A';
-      } catch (e) {
-        document.getElementById('status').textContent = 'Offline';
-        document.getElementById('version').textContent = '—';
-        document.getElementById('commit').textContent = '—';
-      }
-    }
-    loadInfo();
-  </script>
+            // Create new row
+            const newRow = studentTable.insertRow();
+            newRow.insertCell(0).innerText = name;
+            newRow.insertCell(1).innerText = cls;
+            newRow.insertCell(2).innerText = city;
+            newRow.insertCell(3).innerText = phone;
+
+            // Clear form
+            studentForm.reset();
+        });
+    </script>
+
 </body>
 </html>
