@@ -1,4 +1,4 @@
-name: Build → Push → Deploy to Kubernetes
+name: deployment mahesh123
 
 on:
   push:
