@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: myapp
+          image: ghcr.io/OWNER/myapp:latest   # <-- replace with your image reference
+          ports:
+            - containerPort: 3000
+          # env:    # add env if needed
+          #   - name: NODE_ENV
+          #     value: production
